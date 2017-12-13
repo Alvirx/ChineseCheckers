@@ -1,20 +1,26 @@
+package Server;
+
+import Server.Game;
+
 import java.net.ServerSocket;
 
 public class GameServer
 {
     public static void main(String[] args) throws Exception {
         ServerSocket listener = new ServerSocket(8901);
-        System.out.println("Server is running");
+
         try {
+            System.out.println("Server is running");
             while (true) {
                 Game game = new Game();
-                Game.Player playerX = game.new Player(listener.accept(), 'X');
-                Game.Player playerO = game.new Player(listener.accept(), 'O');
-                playerX.setOpponent(playerO);
-                playerO.setOpponent(playerX);
-                game.currentPlayer = playerX;
-                playerX.start();
-                playerO.start();
+                //TODO should take at least two players and then if they want to start the game or let them wait for others
+                //for now only takes one player
+
+                Player newPlayer = new BasicPlayer();
+                newPlayer.init(listener.accept(), 1, game);
+                game.addPlayer(newPlayer);
+
+                game.start();
             }
         } finally {
             listener.close();

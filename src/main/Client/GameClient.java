@@ -11,6 +11,20 @@ public class GameClient
     private BufferedReader input;
     private PrintWriter output;
 
+    void sendMessage(String message){
+        output.print(message);
+    }
+    String receiveMessage(){
+        String message = null;
+        try {
+            message = input.readLine();
+        }catch (Exception e){
+            System.out.println("error, nie wiem co mam robic");
+        }finally {
+            return message;
+        }
+    }
+
     public GameClient(String serverAddress) throws Exception
     {
         socket = new Socket(serverAddress, PORT);
@@ -18,6 +32,7 @@ public class GameClient
         output = new PrintWriter(socket.getOutputStream(), true);
     }
 
+/*
     public void play() throws Exception
     {
         String response;
@@ -36,8 +51,9 @@ public class GameClient
         }
     }
 
+*/
 
-    public static void main(String [] args)
+/*    public static void main(String [] args)
     {
         try {
             GameClient client = new GameClient("localhost");
@@ -46,5 +62,5 @@ public class GameClient
         } catch (Exception e) {
             System.out.println("Can`t connect to the server");
         }
-    }
+    }*/
 }

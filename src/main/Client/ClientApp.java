@@ -14,14 +14,21 @@ public class ClientApp{
 
         Application currentApp = new FirstPage();
         String [] arguments = {"pierwszy","drugi","trzeci"};
-        Application.launch(FirstPage.class, arguments);
+        Game t[] = new Game[5];
+        for(int i = 0; i < t.length; i++){
+            t[i] = new Game("gra" + i, i * 2, i * 3);
+        }
+
         GameView view = new GameView("gra1", 4, 5);
         Gson gson = new Gson();
-        int [] t = {3,2,5,2};
         String json = gson.toJson(t);
 
+//        System.out.println(gson.fromJson(json, Game[].class)[3].getGameName());
+        arguments[0] = json;
+        Application.launch(FirstPage.class, arguments);
 
-        System.out.println(gson.toJson(view));
+
+//        System.out.println(t);
     }
 
 

@@ -60,6 +60,7 @@ public class BasicPlayer extends Player {
         try {
             /*sent list of existing games on the server*/
             LinkedList<Game> list = Lobby.getInstance().getListOfGames();
+            output.println("GAMES");
             output.println(gson.toJson(list));
 
             /*reads the input from client*/
@@ -67,6 +68,7 @@ public class BasicPlayer extends Player {
             //While player does not close application
             while (!massage.startsWith("QUIT"))
             {
+
                 if(massage.startsWith("JOIN") && game==null)
                 {
                     String gameName = input.readLine();
@@ -74,6 +76,7 @@ public class BasicPlayer extends Player {
                     try
                     {
                         game.addPlayer(this);
+                        output.println("YOUR_GAME");
                         output.println(gson.toJson(game));
                     }
                     catch (Exception e)

@@ -1,5 +1,11 @@
 package sample.board;
 
+/**
+ * Klasa pola posiada na chwile obecna namiary do pol otaczajacych, okreslony kolor
+ * i wzgledne wspolrzedne X, Y, ktore potrzebuje do rysowania
+ *
+ * kazde pole ma dodatkowo swoj numer id
+ */
 public class Field {
     private Field upLeft;
     private Field upRight;
@@ -18,8 +24,8 @@ public class Field {
         this.id = id;
         this.X  = x;
         this.Y = y;
-        this.colour = Colours.ORANGE;
-        System.out.println("utworzono: " + this + " param: " + X + "\t" + Y);
+        this.colour = Colours.WHITE;
+//        System.out.println("utworzono: " + this + " param: " + X + "\t" + Y);
 
     }
 

@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+/**
+ * GUI wyswietlajace tablice
+ */
 public class Main extends Application {
     // rozmiar sceny
     int STAGE_WIDTH = 600;

@@ -4,20 +4,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ *
+ */
 public class Board {
 
-
+    /**
+     * Obecnie wszystkie pola sa przechowywane w hashSecie, jeśli bedzie Ci wygodnie mozesz dowolnie zmienic to na jakas
+     * inna strukture dancyh, korzystam tylko z dodwania do, oraz z iteracji po elementach.
+     */
     HashSet<Field> fields = new HashSet<>();
 
+    /**
+     * Dlugosc skrzydla tworzonej planszy, w zadaniu wystepuje plansza z size = 4, ale chcialo mi sie bawic to zrobilem
+     * uniwersalne
+     */
     int size;
 
 
+    /**
+     * Jedyne co potrzebuje, aby rysowac gui, potem iteruje sobie po elementach i zamieszczam je na rysunku
+     * @return
+     */
     public HashSet<Field> getFields(){
         return fields;
     }
 
-
-    public  void getShapes() {
+    /**
+     * Jest to funkcja, ktora tworzy mi po koleji wszystkie pola, daje im wspolrzedne oraz namiary do pol jej otaczajacych
+     * Dodatkowo ramiona kolorluje wedlug rysunku pod adresem:
+     * http://www.fun-free-party-games.com/downloads/Game-Board-Chinese-Checkers-Full.gif
+     * Wydaje mi sie, ze to wszystko co musimy nadac tworzac tablice, ale latwo dorzucic nowe elementy
+     *
+     * Tworzenie podzielilem na 4 etapy, oraz 3 laczenia, chyba nie ma sensu bys wchodzil w strukture algorytmu
+     *
+     * metoda getShapes nie powinna byc nigdy wywolywana poza konstruktorem, ale nie wiem,
+     * czy do jakiegos buildera jej wypchac nie wypadalo by
+     */
+    private void getShapes() {
 
         ArrayList<Field> newLine = new ArrayList<>();
         ArrayList<Field> oldLine = new ArrayList<>();
@@ -136,6 +160,10 @@ public class Board {
 
     }
 
+    /**
+     * No i konstruktor
+     * @param size
+     */
     public Board(int size) {
         this.size = size;
         getShapes();

@@ -61,7 +61,7 @@ public class BasicPlayer extends Player {
             /*sent list of existing games on the server*/
             LinkedList<Game> list = Lobby.getInstance().getListOfGames();
             output.println("GAMES");
-            output.println(gson.toJson(list));
+            output.println(gson.toJson(list.toArray(new Game[list.size()])));
 
             /*reads the input from client*/
             String massage = input.readLine();

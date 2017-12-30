@@ -12,7 +12,7 @@ public class GameClient
     private PrintWriter output;
 
     void sendMessage(String message){
-        output.print(message);
+        output.println(message);
     }
     String receiveMessage(){
         String message = null;

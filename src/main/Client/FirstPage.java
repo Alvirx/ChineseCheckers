@@ -16,7 +16,6 @@ import javafx.scene.text.Font;
 import javafx.stage.*;
 import javafx.scene.*;
 
-import java.util.List;
 
 
 public class FirstPage  extends Application{
@@ -24,22 +23,26 @@ public class FirstPage  extends Application{
     //Szerokosc i wysokosc aplikaci
     private final int HEIGHT = 600;
     private final int WIDTH = 600;
-    private TableView<GameView>  gamesTable;// = new TableView<GameView>();
+
+    /**
+     * Konstrukcja odpowiedzialna za wyswietlanie gier,
+     * gameTable to tablica w ktorej zostaja wyswietlane klasa GameView w osobnych rzedach przechowywane w data
+     */
+    private TableView<GameView>  gamesTable;
     private ObservableList<GameView> data ;
 
+    /**
+     * Manager to klasa odpowiezialna za odebranie obiektu, zamiane go na jsona i wyslanie do serwera
+     */
     private  ConnectionManagerInterface manager;
 
 
     @Override
     public void init() throws Exception{
         gamesTable = new TableView<GameView>();
-        data = FXCollections.observableArrayList();
         manager = new ConnectionManager();
+        loadData();
 
-        Game [] gT = manager.getGames();
-        for(Game game: gT){
-            data.add(new GameView(game.getGameName(), game.getActualNumberOfPLayers(), game.getMaxNumberOfPlayers()));
-        }
     }
     @Override
     public void start(Stage primaryStage){
@@ -105,17 +108,9 @@ public class FirstPage  extends Application{
         Button createButton = new Button("Utworz");
 
         createButton.setOnAction( e ->{
-
-            try {
                 String name = nameTextField.getText();
-                int max = Integer.valueOf(maxTextField.getText());
-                manager.chooseGame(new Game(name, max));
+                manager.chooseGame(name);
                 stage.close();
-            } catch (NumberFormatException numE){
-                //do nothing
-            }
-
-
         });
 
         hBox.getChildren().addAll(nameTextField, maxTextField, createButton);
@@ -132,9 +127,15 @@ public class FirstPage  extends Application{
     void startGame(){
         System.out.println("startGameAction");
         GameView view = gamesTable.getSelectionModel().getSelectedItem();
-        Game selectedGame = new Game(view.getGameName(), view.getActualNumberOfPLayers(), view.getMaxNumberOfPlayers());
-        manager.chooseGame(selectedGame);
+        manager.chooseGame(view.getGameName());
 
+    }
+    private void loadData(){
+        data = FXCollections.observableArrayList();
+        Game [] gT = manager.getGames();
+        for(Game game: gT){
+            data.add(new GameView(game.getName(), game.getActualPlayers(), game.getMaxPlayers()));
+        }
     }
 
     public static void main(String[] args) {

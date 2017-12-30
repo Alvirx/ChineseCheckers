@@ -1,43 +1,48 @@
 package Client;
 
 public class Game {
-    private String gameName;
-    private int maxNumberOfPlayers;
-    private int actualNumberOfPLayers;
 
-    public Game(String gameName, int maxNumberOfPlayers) {
-        this.gameName = gameName;
-        this.maxNumberOfPlayers = maxNumberOfPlayers;
-        this.actualNumberOfPLayers = 0;
-    }
-    Game(String gameName, int actualNumberOfPLayers, int maxNumberOfPlayers){
-        this.gameName = gameName;
-        this.actualNumberOfPLayers = actualNumberOfPLayers;
-        this.maxNumberOfPlayers = maxNumberOfPlayers;
+    private String name;
+    private int actualPlayers;
+    private int readyPlayers;
+    private int maxPlayers;
 
+    public Game(String name, int maxPlayers) {
+        this.name = name;
+        this.maxPlayers = maxPlayers;
+        this.actualPlayers = 0;
+        this.readyPlayers = 0;
     }
 
-    public String getGameName() {
-        return gameName;
+    public String getName() {
+        return name;
     }
 
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getMaxNumberOfPlayers() {
-        return maxNumberOfPlayers;
+    public int getActualPlayers() {
+        return actualPlayers;
     }
 
-    public void setMaxNumberOfPlayers(int maxNumberOfPlayers) {
-        this.maxNumberOfPlayers = maxNumberOfPlayers;
+    public void setActualPlayers(int actualPlayers) {
+        this.actualPlayers = actualPlayers;
     }
 
-    public int getActualNumberOfPLayers() {
-        return actualNumberOfPLayers;
+    public int getReadyPlayers() {
+        return readyPlayers;
     }
 
-    public void setActualNumberOfPLayers(int actualNumberOfPLayers) {
-        this.actualNumberOfPLayers = actualNumberOfPLayers;
+    public void setReadyPlayers(int readyPlayers) {
+        this.readyPlayers = readyPlayers;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public void setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
     }
 }

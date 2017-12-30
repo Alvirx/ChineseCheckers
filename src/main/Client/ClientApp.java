@@ -12,7 +12,7 @@ public class ClientApp{
     public static void main(String[] args) {
 
 
-        Application currentApp = new FirstPage();
+/*        Application currentApp = new FirstPage();
         String [] arguments = {"pierwszy","drugi","trzeci"};
         Game t[] = new Game[5];
         for(int i = 0; i < t.length; i++){
@@ -28,7 +28,7 @@ public class ClientApp{
         Application.launch(FirstPage.class, arguments);
 
 
-//        System.out.println(t);
+//        System.out.println(t);*/
     }
 
 

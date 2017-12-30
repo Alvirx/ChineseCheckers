@@ -5,6 +5,18 @@ public class Game {
     private int maxNumberOfPlayers;
     private int actualNumberOfPLayers;
 
+    public Game(String gameName, int maxNumberOfPlayers) {
+        this.gameName = gameName;
+        this.maxNumberOfPlayers = maxNumberOfPlayers;
+        this.actualNumberOfPLayers = 0;
+    }
+    Game(String gameName, int actualNumberOfPLayers, int maxNumberOfPlayers){
+        this.gameName = gameName;
+        this.actualNumberOfPLayers = actualNumberOfPLayers;
+        this.maxNumberOfPlayers = maxNumberOfPlayers;
+
+    }
+
     public String getGameName() {
         return gameName;
     }

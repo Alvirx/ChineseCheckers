@@ -21,7 +21,7 @@ public class GameTest {
     {
         Player p1 = new BasicPlayer(new Socket());
         game.addPlayer(p1);
-        assertEquals(1, game.players.size());
+        assertEquals(1, game.getActualPlayers());
     }
 
     @Test(expected = Exception.class)
@@ -54,7 +54,7 @@ public class GameTest {
         game.addPlayer(p1);
         game.addPlayer(p2);
         game.removePlayer(p1);
-        assertEquals(1, game.players.size());
+        assertEquals(1, game.getActualPlayers());
     }
 
     /*@Test

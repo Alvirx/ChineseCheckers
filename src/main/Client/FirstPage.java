@@ -5,10 +5,12 @@ import javafx.application.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.*;
@@ -66,8 +68,14 @@ public class FirstPage  extends Application{
         newGameButton.setOnAction(e -> {
             createGame();
         });
+
+        Button startGameButton = new Button("Wejdz w gre");
+        startGameButton.setOnAction(e -> {
+            startGame();
+        });
+
         HBox bottomPanel = new HBox();
-        bottomPanel.getChildren().add(newGameButton);
+        bottomPanel.getChildren().addAll(newGameButton, startGameButton);
 
 
         //tworzymy layout
@@ -82,6 +90,7 @@ public class FirstPage  extends Application{
 
     }
 
+    //Nadaje funkcjonalnosc przyciskowi newGame
     private void createGame(){
         Stage stage = new Stage();
         HBox hBox = new HBox();
@@ -96,22 +105,41 @@ public class FirstPage  extends Application{
         Button createButton = new Button("Utworz");
 
         createButton.setOnAction( e ->{
-            String name = nameTextField.getText();
-            String max = maxTextField.getText();
 
-            manager.chooseGame(new Game(name, Integer.parseInt(max)));
-            stage.close();
+            try {
+                String name = nameTextField.getText();
+                int max = Integer.valueOf(maxTextField.getText());
+                manager.chooseGame(new Game(name, max));
+                stage.close();
+            } catch (NumberFormatException numE){
+                //do nothing
+            }
 
 
         });
 
         hBox.getChildren().addAll(nameTextField, maxTextField, createButton);
-        Scene scene = new Scene(hBox, WIDTH/2, HEIGHT/2);
+        hBox.setSpacing(5);
+        hBox.setPadding(new Insets(10, 10, 10, 10));
+        hBox.setAlignment(Pos.CENTER);
+        Scene scene = new Scene( hBox, WIDTH * 0.8, HEIGHT/2);
         stage.setScene(scene);
         stage.show();
 
     }
 
+    //Nadaje funkcjonalnosc przyciskowi StartGameButton
+    void startGame(){
+        System.out.println("startGameAction");
+        GameView view = gamesTable.getSelectionModel().getSelectedItem();
+        Game selectedGame = new Game(view.getGameName(), view.getActualNumberOfPLayers(), view.getMaxNumberOfPlayers());
+        manager.chooseGame(selectedGame);
+
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
 
 }

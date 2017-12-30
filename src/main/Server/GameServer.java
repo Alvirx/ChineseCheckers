@@ -1,27 +1,32 @@
 package Server;
 
+import com.google.gson.Gson;
+
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class GameServer
 {
+    /*
+    * Catch players that wants to connect and starts its Thread
+    * */
     public static void main(String[] args) throws Exception {
-        ServerSocket listener = new ServerSocket(8901);
 
+        Gson g = new Gson();
+        Game game = Lobby.getInstance().getGame("gra");
+        game.addPlayer(new BasicPlayer(new Socket()));
+        System.out.println(g.toJson(game));
+
+        /*ServerSocket listener = new ServerSocket(8901);
         try {
             System.out.println("Server is running");
             while (true) {
-                Game game = new Game();
-                //TODO should take at least two players and then if they want to start the game or let them wait for others
-                //for now only takes one player
 
-                Player newPlayer = new BasicPlayer();
-                newPlayer.init(listener.accept(), 1, game);
-                game.addPlayer(newPlayer);
-
-                game.start();
+                Player newPlayer = new BasicPlayer(listener.accept());
+                new Thread(newPlayer).start();
             }
         } finally {
             listener.close();
-        }
+        }*/
     }
 }

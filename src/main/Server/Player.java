@@ -1,9 +1,29 @@
 package Server;
 
-
-import java.net.Socket;
-
-public interface Player extends Runnable
+/*abstract class for human and computer players*/
+public abstract class Player implements Runnable
 {
-    void init(Socket socket, int number, Game game);
+    protected Game game;
+    protected boolean isReady;
+
+    /*
+    * returns true if player is ready to game
+    * else returns false
+    */
+    public boolean isReady()
+    {
+        return isReady;
+    }
+
+    /*Clears the information about game*/
+   public void clear()
+    {
+        if(game!=null)
+        {
+            game.removePlayer(this);
+            game = null;
+        }
+        isReady = false;
+    }
+
 }

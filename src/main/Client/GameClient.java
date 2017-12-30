@@ -1,5 +1,4 @@
 package Client;
-import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -24,9 +23,10 @@ public class GameClient
         String response;
         try {
             while (true) {
-                output.println("Hey I am client");
                 response = input.readLine();
-                //for now it just prints responses
+                output.println("JOIN");
+                output.println("hihi");
+
                 System.out.println(response);
             }
         } catch (Exception e) {

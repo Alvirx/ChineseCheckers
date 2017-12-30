@@ -2,27 +2,61 @@ package Server;
 
 import java.util.LinkedList;
 
-public class Game
+public abstract class Game
 {
-    LinkedList<Thread> players = new LinkedList<>();
+    protected String name;
+    protected LinkedList<Player> players;
+    protected int maxPlayers;
 
-    //adds player to list of players
-    void addPlayer(Player p)
+    public Game(String name)
     {
-        players.add(new Thread(p));
+        this.name = name;
+        players = new LinkedList<>();
     }
 
-    //starts the game
-    public void start()
+    /*returns name*/
+    public String getName()
     {
-        for(Thread player : players) player.start();
+        return name;
     }
 
     /*
-    *For now this method only prints message at the stdOut
+    * adds player to the list of players if there is a place for him
+    * else throws Exception
+    * TODO make new Exception
     * */
-    public void log(String message)
+    public synchronized void addPlayer(Player p) throws Exception
     {
-        System.out.println(message);
+        if(players.size()<maxPlayers) players.add(p);
+        else throw new Exception();
     }
+
+    /*Removes player form Game*/
+    public void removePlayer(Player p)
+    {
+        players.remove(p);
+        playersReady();
+    }
+
+    /*Checks if all players are ready, if they are starts the game*/
+    public void playersReady()
+    {
+        boolean gameReady = true;
+        for (Player player : players)
+        {
+            if(!player.isReady())
+            {
+                gameReady=false;
+                break;
+            }
+        }
+        if(gameReady) startGame();
+    }
+
+    /*Starts the Game*/
+    public abstract void startGame();
+
+
+
+
 }

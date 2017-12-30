@@ -1,62 +1,93 @@
 package Server;
 
-import java.util.LinkedList;
-
+/**
+ * Abstract class for multiplayer game
+ * */
 public abstract class Game
 {
     protected String name;
-    protected LinkedList<Player> players;
-    protected int maxPlayers;
+    private int actualPlayers;
+    private int readyPlayers;
+    int maxPlayers;
 
+
+    /**
+     * Creates instance of the game and sets actualPlayers and readyPlayers to 0
+     * */
     public Game(String name)
     {
         this.name = name;
-        players = new LinkedList<>();
+        actualPlayers = 0;
+        readyPlayers = 0;
     }
 
-    /*returns name*/
+    /**
+     * @return name of the game
+     * */
     public String getName()
     {
         return name;
     }
 
-    /*
-    * adds player to the list of players if there is a place for him
-    * else throws Exception
-    * TODO make new Exception
-    * */
-    public synchronized void addPlayer(Player p) throws Exception
+    /**
+     * adds player to the list of players if there is a place for him
+     * else throws Exception  TODO make new Exception
+     * @param p player that wants to join
+     *
+     * */
+    synchronized void addPlayer(Player p) throws Exception
     {
-        if(players.size()<maxPlayers) players.add(p);
+        if(actualPlayers<maxPlayers) actualPlayers++;
         else throw new Exception();
     }
 
-    /*Removes player form Game*/
-    public void removePlayer(Player p)
+    /**
+     * @return number of actual players connected to the game
+     * */
+    int getActualPlayers()
     {
-        players.remove(p);
-        playersReady();
+        return actualPlayers;
     }
 
-    /*Checks if all players are ready, if they are starts the game*/
-    public void playersReady()
+    /**
+     * Removes player form Game and then checks if all players are ready
+     * @param p player that wants to quit
+    */
+    void removePlayer(Player p)
     {
-        boolean gameReady = true;
-        for (Player player : players)
-        {
-            if(!player.isReady())
-            {
-                gameReady=false;
-                break;
-            }
-        }
-        if(gameReady) startGame();
+        actualPlayers--;
+        if(p.isReady()) readyPlayers--;
+        areAllPlayersReady();
     }
 
-    /*Starts the Game*/
+    /**
+     * increments readyPlayers number and checks if all players are ready
+     * */
+    void playerReady()
+    {
+        readyPlayers++;
+        areAllPlayersReady();
+    }
+
+    /**
+     * decrements readyPlayers number
+     * */
+    void playerNotReady()
+    {
+        readyPlayers--;
+    }
+
+    /**
+     * Checks if all players are ready, if they are starts the game
+     * */
+    public void areAllPlayersReady()
+    {
+        if(actualPlayers==readyPlayers) startGame();
+    }
+
+    /**
+     * Starts the Game
+     * */
     public abstract void startGame();
-
-
-
 
 }

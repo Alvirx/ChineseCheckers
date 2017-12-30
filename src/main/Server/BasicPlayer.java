@@ -8,14 +8,24 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.LinkedList;
 
-/*
-*
-*
-*
-*
-*
-*
-* */
+/**
+ *  A Thread for a network multi-player Chinese Checkers game. It have our CCP (Chinese Checkers
+ *  protocol) which is mainly plain text with JSON addons for senting things like list of
+ *  possible moves
+ *  The strings that are sent in CCP are:
+ *
+ *  Client -> Server                                Server -> Client
+ *  ----------------                                ----------------
+ *  QUIT                                            GAMES
+ *  JOIN                                                List of games on the server converted to JSON
+ *      "Name_Of_Game"                              YOUR_GAME
+ *  READY                                               Requested game converted to JSON
+ *      true or false converted to JSON             GAME_STARTED
+ *                                                  TO_MUCH_PLAYERS
+ *
+ *
+ *
+ */
 public class BasicPlayer extends Player {
 
     Gson gson;
@@ -23,7 +33,11 @@ public class BasicPlayer extends Player {
     BufferedReader input;
     PrintWriter output;
 
-    /*creates thread for communication with client application*/
+    /**
+     * creates Thread for communication with client application
+     * which represents player in the game
+     * @param socket socket to client application
+     * */
     public BasicPlayer(Socket socket)
     {
         gson = new Gson();
@@ -38,32 +52,29 @@ public class BasicPlayer extends Player {
     }
 
 
-    /*communicates with application while game is on*/
+    /**
+     * communicates with client application, sent information, recive it and validate it
+     * */
     @Override
     public void run() {
         try {
+            /*sent list of existing games on the server*/
             LinkedList<Game> list = Lobby.getInstance().getListOfGames();
-            //TODO sent list of games to client
-            //output.println(gson.toJson(list));
-            output.println("Tutaj drukowana lista gier");
+            output.println(gson.toJson(list));
 
-
+            /*reads the input from client*/
             String massage = input.readLine();
+            //While player does not close application
             while (!massage.startsWith("QUIT"))
             {
                 if(massage.startsWith("JOIN") && game==null)
                 {
                     String gameName = input.readLine();
-
                     game = Lobby.getInstance().getGame(gameName);
-                    System.out.println(game.getName());
                     try
                     {
                         game.addPlayer(this);
-                        //TODO sent game instance to the client via Json
-                        //output.println(gson.toJson(game));
-                        output.println("Nazwa gry:"+game.getName());
-
+                        output.println(gson.toJson(game));
                     }
                     catch (Exception e)
                     {
@@ -74,15 +85,23 @@ public class BasicPlayer extends Player {
                 else if(massage.startsWith("READY") && game!=null)
                 {
                     String ready = input.readLine();
+                    boolean wasReady = isReady;
                     isReady = gson.fromJson(ready, Boolean.class);
-                    game.playersReady();
+                    if(!wasReady && isReady)
+                    {
+                        game.playerReady();
+                    }
+                    else if(wasReady && !isReady)
+                    {
+                        game.playerNotReady();
+                    }
                 }
-
+                //TODO other stuff
                 massage = input.readLine();
             }
             clear();
         } catch (Exception e) {
-            //myGame.log("Player disconnected");
+            System.out.println("Error with communication with client");
         }
     }
 }

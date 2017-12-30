@@ -2,18 +2,22 @@ package Server;
 
 import java.util.LinkedList;
 
+/**
+ * Stores list of games on the server and
+ * manages them
+ * */
 public class Lobby
 {
     private static Lobby instance;
     private LinkedList<Game> listOfGames;
 
-    /*private constructor since this is singleton pattern*/
+    /**private constructor since this is singleton pattern*/
     private Lobby()
     {
         listOfGames = new LinkedList<>();
     }
 
-    /*returns instance of lobby*/
+    /**@return instance of Lobby class*/
     static Lobby getInstance()
     {
          if(instance==null)
@@ -23,7 +27,12 @@ public class Lobby
          return instance;
     }
 
-    /*Returns Game with specified name and if specified Game doesn`t exist - creates it*/
+    /**
+     * Looks for a game in the list of games
+     * and if specified Game doesn`t exist - creates it
+     * @param name name of requested game
+     * @eturn Game with specified name
+     * */
     public Game getGame(String name)
     {
         for (Game game : listOfGames)
@@ -35,7 +44,9 @@ public class Lobby
         return game;
     }
 
-    /*returns list of games*/
+    /**
+     * @return list of games
+     * */
     public LinkedList<Game> getListOfGames()
     {
         return listOfGames;

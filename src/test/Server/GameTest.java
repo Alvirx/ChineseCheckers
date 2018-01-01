@@ -8,7 +8,13 @@ import static org.junit.Assert.*;
 
 public class GameTest {
 
-    Game game = new BasicGame("Game");
+    Game game = new Game("game")
+    {
+        @Override
+        public void startGame() {
+            System.out.println("game_started");
+        }
+    };
 
     @Test
     public void ShouldReturnGameName() throws Exception
@@ -57,12 +63,5 @@ public class GameTest {
         assertEquals(1, game.getActualPlayers());
     }
 
-    /*@Test
-    public void playersReady() throws Exception {
-    }
-
-    @Test
-    public void startGame() throws Exception {
-    }*/
 
 }

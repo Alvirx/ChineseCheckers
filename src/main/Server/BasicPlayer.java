@@ -16,12 +16,12 @@ import java.util.LinkedList;
  *
  *  Client -> Server                                Server -> Client
  *  ----------------                                ----------------
- *  QUIT                                            GAMES
+ *  GET_GAMES                                       GAMES
  *  JOIN                                                List of games on the server converted to JSON
  *      "Name_Of_Game"                              YOUR_GAME
  *  READY                                               Requested game converted to JSON
  *      true or false converted to JSON             GAME_STARTED
- *                                                  TO_MUCH_PLAYERS
+ *  QUIT                                            TO_MUCH_PLAYERS
  *
  *
  *
@@ -58,18 +58,18 @@ public class BasicPlayer extends Player {
     @Override
     public void run() {
         try {
-            /*sent list of existing games on the server*/
-            LinkedList<Game> list = Lobby.getInstance().getListOfGames();
-            output.println("GAMES");
-            output.println(gson.toJson(list.toArray(new Game[list.size()])));
-
-            /*reads the input from client*/
             String massage = input.readLine();
             //While player does not close application
             while (!massage.startsWith("QUIT"))
             {
 
-                if(massage.startsWith("JOIN") && game==null)
+                if(massage.startsWith("GET_GAMES"))
+                {
+                    LinkedList<Game> list = Lobby.getInstance().getListOfGames();
+                    output.println("GAMES");
+                    output.println(gson.toJson(list.toArray(new Game[list.size()])));
+                }
+                else if(massage.startsWith("JOIN") && game==null)
                 {
                     String gameName = input.readLine();
                     game = Lobby.getInstance().getGame(gameName);

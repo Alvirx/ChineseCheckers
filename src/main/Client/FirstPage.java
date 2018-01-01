@@ -72,13 +72,13 @@ public class FirstPage  extends Application{
             createGame();
         });
 
-        Button startGameButton = new Button("Wejdz w gre");
-        startGameButton.setOnAction(e -> {
-            startGame();
+        Button chooseGameButton = new Button("Wejdz w gre");
+        chooseGameButton.setOnAction(e -> {
+            chooseGame();
         });
 
         HBox bottomPanel = new HBox();
-        bottomPanel.getChildren().addAll(newGameButton, startGameButton);
+        bottomPanel.getChildren().addAll(newGameButton, chooseGameButton);
 
 
         //tworzymy layout
@@ -102,8 +102,8 @@ public class FirstPage  extends Application{
 
         TextField nameTextField = new TextField();
         nameTextField.setPromptText("Nazwa Gry");
-        TextField maxTextField = new TextField();
-        maxTextField.setPromptText("Maks");
+//        TextField maxTextField = new TextField();
+//        maxTextField.setPromptText("Maks");
 
         Button createButton = new Button("Utworz");
 
@@ -113,7 +113,7 @@ public class FirstPage  extends Application{
                 stage.close();
         });
 
-        hBox.getChildren().addAll(nameTextField, maxTextField, createButton);
+        hBox.getChildren().addAll(nameTextField, createButton);
         hBox.setSpacing(5);
         hBox.setPadding(new Insets(10, 10, 10, 10));
         hBox.setAlignment(Pos.CENTER);
@@ -124,7 +124,7 @@ public class FirstPage  extends Application{
     }
 
     //Nadaje funkcjonalnosc przyciskowi StartGameButton
-    void startGame(){
+    void chooseGame(){
         System.out.println("startGameAction");
         GameView view = gamesTable.getSelectionModel().getSelectedItem();
         manager.chooseGame(view.getGameName());

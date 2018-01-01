@@ -12,26 +12,47 @@ public class ConnectionManager implements ConnectionManagerInterface{
     Gson gson;
     GameClient client;
 
+    Game getGame(){
+        Game game = null;
+        String message = client.receiveMessage();
+        if(message.equals("YOUR_GAME")){
+            String json = client.receiveMessage();
+            game = gson.fromJson(json, Game.class);
+        }
+
+        return game;
+    }
+
 
     @Override
     public Game[] getGames() {
-//        client.sendMessage("");
+        client.sendMessage("GETGAMES");
         Game[] games = null;
 
         String message = client.receiveMessage();
-        if(message == "GAMES") {
+        System.out.println(message);
+        if(message.equals("GAMES")) {
             String json = client.receiveMessage();
             System.out.println(json);
             games = gson.fromJson(json, Game[].class);
+            System.out.println(games.length);
         }
 
         return  games;
+    }
+
+    void closeConnection(){
+        client.sendMessage("QUIT");
+        if(!client.closeConnection())
+            System.out.println("Something went wrong");
+
     }
 
 
     @Override
     public void chooseGame(String gameName) {
         client.sendMessage("JOIN");
+        System.out.println("wybieram");
         client.sendMessage(gameName);
 
     }

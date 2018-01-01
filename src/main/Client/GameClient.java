@@ -4,6 +4,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ *
+ */
 public class GameClient
 {
     private static int PORT = 8901;
@@ -12,6 +15,7 @@ public class GameClient
     private PrintWriter output;
 
     void sendMessage(String message){
+        System.out.println("wysyłam: " + message);
         output.println(message);
     }
     String receiveMessage(){
@@ -21,11 +25,21 @@ public class GameClient
         }catch (Exception e){
             System.out.println("error, nie wiem co mam robic");
         }finally {
+            System.out.println("odbieram: " + message);
             return message;
         }
     }
 
-    public GameClient(String serverAddress) throws Exception
+    boolean closeConnection(){
+        try{
+            socket.close();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    GameClient(String serverAddress) throws Exception
     {
         socket = new Socket(serverAddress, PORT);
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));

@@ -6,15 +6,9 @@ import java.net.Socket;
 
 import static org.junit.Assert.*;
 
-public class GameTest {
+public class BasicGameTest {
 
-    Game game = new Game("game")
-    {
-        @Override
-        public void startGame() {
-            System.out.println("game_started");
-        }
-    };
+    Game game = new BasicGame("Game");
 
     @Test
     public void ShouldReturnGameName() throws Exception
@@ -47,13 +41,10 @@ public class GameTest {
         game.addPlayer(p5);
         game.addPlayer(p6);
         game.addPlayer(p7);
-
     }
 
-
-
     @Test
-    public void ShouldremovePlayer() throws Exception
+    public void ShouldRemovePlayer() throws Exception
     {
         Player p1 = new BasicPlayer(new Socket());
         Player p2 = new BasicPlayer(new Socket());
@@ -62,6 +53,8 @@ public class GameTest {
         game.removePlayer(p1);
         assertEquals(1, game.getActualPlayers());
     }
+
+
 
 
 }

@@ -51,7 +51,6 @@ public class BasicPlayer extends Player {
         }
     }
 
-
     /**
      * communicates with client application, sent information, recive it and validate it
      * */
@@ -65,39 +64,15 @@ public class BasicPlayer extends Player {
 
                 if(massage.startsWith("GET_GAMES"))
                 {
-                    LinkedList<Game> list = Lobby.getInstance().getListOfGames();
-                    output.println("GAMES");
-                    output.println(gson.toJson(list.toArray(new Game[list.size()])));
+                    sentGames();
                 }
                 else if(massage.startsWith("JOIN") && game==null)
                 {
-                    String gameName = input.readLine();
-                    game = Lobby.getInstance().getGame(gameName);
-                    try
-                    {
-                        game.addPlayer(this);
-                        output.println("YOUR_GAME");
-                        output.println(gson.toJson(game));
-                    }
-                    catch (Exception e)
-                    {
-                        output.println("TO_MUCH_PLAYERS");
-                        game = null;
-                    }
+                    joinGame(input.readLine());
                 }
                 else if(massage.startsWith("READY") && game!=null)
                 {
-                    String ready = input.readLine();
-                    boolean wasReady = isReady;
-                    isReady = gson.fromJson(ready, Boolean.class);
-                    if(!wasReady && isReady)
-                    {
-                        game.playerReady();
-                    }
-                    else if(wasReady && !isReady)
-                    {
-                        game.playerNotReady();
-                    }
+                    validateReady(input.readLine());
                 }
                 //TODO other stuff
                 massage = input.readLine();
@@ -107,4 +82,42 @@ public class BasicPlayer extends Player {
             System.out.println("Error with communication with client");
         }
     }
+
+    private void sentGames()
+    {
+        LinkedList<Game> list = Lobby.getInstance().getListOfGames();
+        output.println("GAMES");
+        output.println(gson.toJson(list.toArray(new Game[list.size()])));
+    }
+
+    private void joinGame(String gameName)
+    {
+        game = Lobby.getInstance().getGame(gameName);
+        try
+        {
+            game.addPlayer(this);
+            output.println("YOUR_GAME");
+            output.println(gson.toJson(game));
+        }
+        catch (Exception e)
+        {
+            output.println("TO_MUCH_PLAYERS");
+            game = null;
+        }
+    }
+
+    private void validateReady(String ready)
+    {
+        boolean newVal = gson.fromJson(ready, Boolean.class);
+        if(newVal)
+        {
+            game.playerReady(this);
+        }
+        else
+        {
+            game.playerNotReady(this);
+        }
+        isReady = newVal;
+    }
+
 }

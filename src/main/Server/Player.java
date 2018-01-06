@@ -5,8 +5,9 @@ package Server;
  * */
 abstract class Player implements Runnable
 {
-    protected Game game;
-    protected boolean isReady;
+    Game game;
+    boolean isReady;
+    int inGameNumber;
 
     /**
      * @return true if player is ready or false instead
@@ -26,6 +27,11 @@ abstract class Player implements Runnable
             game = null;
         }
         isReady=false;
+    }
+
+    int getInGameNumber()
+    {
+        return inGameNumber;
     }
 
 }

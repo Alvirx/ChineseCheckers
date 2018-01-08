@@ -17,11 +17,30 @@ import java.util.LinkedList;
  *  Client -> Server                                Server -> Client
  *  ----------------                                ----------------
  *  GET_GAMES                                       GAMES
- *  JOIN                                                List of games on the server converted to JSON
- *      "Name_Of_Game"                              YOUR_GAME
- *  READY                                               Requested game converted to JSON
- *      true or false converted to JSON             GAME_STARTED
- *  QUIT                                            TO_MUCH_PLAYERS
+ *                                                      {List of games on the server converted to JSON}
+ *
+ *
+ *  JOIN                                            YOUR_GAME (if player was successfully joined)
+ *      {Name Of Game}                                  {Requested game converted to JSON}
+ *                                                  TO_MUCH_PLAYERS (if there is to much players)
+ *
+ *  READY                                           GAME_STARTED(if all players are now ready)
+ *      {true or false converted to JSON}
+ *
+ *
+ *  UPDATE_GAME                                     UP_TO_DATE (if hashes are the same)
+ *      hash of game object                         NOT_UP_TO_DATE (if hashes are different)
+ *                                                          Requested game converted to JSON (without board)
+ *
+ *
+ *
+ *  UPDATE_BOARD                                    BOARD_UP_TO_DATE (if number is same as number on server)
+ *      number of moves that player                 BOARD_NOT_UP_TO_DATE (if those numbers are different)
+ *      already have been noticed                       list of field pairs that ware moves made From one
+ *      and have them                                   to another, chronologically ordered. This list is
+ *                                                      started from first move that player haven`t been
+ *                                                      noticed yet.
+ *  QUIT
  *
  *
  *

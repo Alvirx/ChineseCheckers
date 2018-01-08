@@ -14,6 +14,9 @@ public class BasicGame implements Game {
 
     private ArrayList<Boolean> players;
 
+    Judge judge;
+    //Board board;
+
     /**
      * Creates instance of the game and sets actualPlayers and readyPlayers to 0
      * */
@@ -87,7 +90,7 @@ public class BasicGame implements Game {
     }
 
     /**
-     * Checks if all players are ready, if they are starts the game
+     * Checks if all players are ready
      * */
     private boolean areAllPlayersReady()
     {

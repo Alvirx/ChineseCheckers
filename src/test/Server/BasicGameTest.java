@@ -8,17 +8,19 @@ import static org.junit.Assert.*;
 
 public class BasicGameTest {
 
-    Game game = new BasicGame("Game");
+    Game game;
 
     @Test
     public void ShouldReturnGameName() throws Exception
     {
+        game = new BasicGame("Game");
         assertEquals("Game", game.getName());
     }
 
     @Test
     public void ShouldAddPlayer() throws Exception
     {
+        game = new BasicGame("Game");
         Player p1 = new BasicPlayer(new Socket());
         game.addPlayer(p1);
         assertEquals(1, game.getActualPlayers());
@@ -27,6 +29,7 @@ public class BasicGameTest {
     @Test(expected = Exception.class)
     public void ShouldThrowExceptionIfThereIsToMuchPlayers() throws Exception
     {
+        game = new BasicGame("Game");
         Player p1 = new BasicPlayer(new Socket());
         Player p2 = new BasicPlayer(new Socket());
         Player p3 = new BasicPlayer(new Socket());
@@ -46,6 +49,7 @@ public class BasicGameTest {
     @Test
     public void ShouldRemovePlayer() throws Exception
     {
+        game = new BasicGame("Game");
         Player p1 = new BasicPlayer(new Socket());
         Player p2 = new BasicPlayer(new Socket());
         game.addPlayer(p1);
@@ -55,6 +59,33 @@ public class BasicGameTest {
     }
 
 
+
+    @Test
+    public void ShouldReturnNumberOfPlayers() throws Exception {
+        game = new BasicGame("Game");
+        game.addPlayer(new BasicPlayer(new Socket()));
+        game.addPlayer(new BasicPlayer(new Socket()));
+        game.addPlayer(new BasicPlayer(new Socket()));
+        assertEquals(3,game.getActualPlayers());
+    }
+
+    @Test
+    public void ShouldMarkPlayerAsReady()
+    {
+        //TODO
+    }
+
+    @Test
+    public void  ShouldMarkPlayerAsNotReady()
+    {
+        //TODO
+    }
+
+    @Test
+    public void ShouldCheckIfAllPlayersAreReady()
+    {
+        //TODO
+    }
 
 
 }

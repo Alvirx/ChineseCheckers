@@ -1,5 +1,3 @@
-package sample.board;
-
 /**
  * Banalna klasa determinujaca kolory do planszy, chyba nic wiecej nie potrzeba
  */

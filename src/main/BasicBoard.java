@@ -1,5 +1,3 @@
-package sample.board;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,7 +5,7 @@ import java.util.HashSet;
 /**
  *
  */
-public class Board {
+public class BasicBoard implements Board{
 
     /**
      * Obecnie wszystkie pola sa przechowywane w hashSecie, jeśli bedzie Ci wygodnie mozesz dowolnie zmienic to na jakas
@@ -164,7 +162,7 @@ public class Board {
      * No i konstruktor
      * @param size
      */
-    public Board(int size) {
+    public BasicBoard(int size) {
         this.size = size;
         getShapes();
     }

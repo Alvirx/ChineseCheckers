@@ -4,9 +4,9 @@ import javafx.scene.control.Label;
 
 public class CheckingGame implements Runnable {
 
-    Label nameLabel = new Label("Oczekujesz na: " + game.getName());
-    Label actualLabel = new Label("Aktualnie oczekujacych: ");
-    Label readyLabel = new Label("Aktualnie gotowych: "  + game.getName());
+    Label nameLabel = new Label();
+    Label actualLabel = new Label();
+    Label readyLabel = new Label();
     ConnectionManagerInterface manager;
     Game game;
     @Override

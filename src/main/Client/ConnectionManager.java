@@ -12,7 +12,8 @@ public class ConnectionManager implements ConnectionManagerInterface{
     Gson gson;
     GameClient client;
 
-    Game getGame(){
+    @Override
+    public Game getGame(){
         Game game = null;
         String message = client.receiveMessage();
         if(message.equals("YOUR_GAME")){

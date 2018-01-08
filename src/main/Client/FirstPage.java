@@ -41,11 +41,16 @@ public class FirstPage  extends Application{
     public void init() throws Exception{
         gamesTable = new TableView<GameView>();
         manager = new ConnectionManager();
-        loadData();
 
     }
     @Override
     public void start(Stage primaryStage){
+        listOfGameWindow(primaryStage);
+    }
+
+    void listOfGameWindow(Stage stage){
+
+        loadData();
 
         //Etykieta na gorze
         Label infoLabel = new Label("Dostepne gry:");
@@ -88,8 +93,8 @@ public class FirstPage  extends Application{
         vBox.getChildren().addAll(infoLabel, gamesTable, bottomPanel);
 
         Scene scene = new Scene(vBox, WIDTH, HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
 
     }
 
@@ -136,6 +141,25 @@ public class FirstPage  extends Application{
         for(Game game: gT){
             data.add(new GameView(game.getName(), game.getActualPlayers(), game.getMaxPlayers()));
         }
+    }
+
+    void lobbyWindow(Stage stage){
+        Label nameLabel = new Label();
+        Label actualLabel = new Label();
+        Label readyLabel = new Label();
+
+        Thread checkingThread = new Thread(new CheckingGame(nameLabel, actualLabel, readyLabel, manager));
+        checkingThread.start();
+
+        VBox vBox = new VBox(nameLabel, actualLabel, readyLabel);
+        Scene scene = new Scene(vBox, WIDTH, HEIGHT);
+        stage.setScene(scene);
+        stage.show();
+
+
+
+
+
     }
 
     public static void main(String[] args) {

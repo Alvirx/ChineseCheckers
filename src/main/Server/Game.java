@@ -1,33 +1,14 @@
 package Server;
 
 /**
- * Abstract class for multiplayer game
+ * Interface for multiplayer game
  * */
-public abstract class Game
+public interface Game
 {
-    protected String name;
-    private int actualPlayers;
-    private int readyPlayers;
-    int maxPlayers;
-
-
-    /**
-     * Creates instance of the game and sets actualPlayers and readyPlayers to 0
-     * */
-    public Game(String name)
-    {
-        this.name = name;
-        actualPlayers = 0;
-        readyPlayers = 0;
-    }
-
     /**
      * @return name of the game
      * */
-    public String getName()
-    {
-        return name;
-    }
+    public String getName();
 
     /**
      * adds player to the list of players if there is a place for him
@@ -35,59 +16,28 @@ public abstract class Game
      * @param p player that wants to join
      *
      * */
-    synchronized void addPlayer(Player p) throws Exception
-    {
-        if(actualPlayers<maxPlayers) actualPlayers++;
-        else throw new Exception();
-    }
+    void addPlayer(Player p) throws Exception;
 
     /**
      * @return number of actual players connected to the game
      * */
-    int getActualPlayers()
-    {
-        return actualPlayers;
-    }
+    int getActualPlayers();
 
     /**
      * Removes player form Game and then checks if all players are ready
      * @param p player that wants to quit
     */
-    void removePlayer(Player p)
-    {
-        actualPlayers--;
-        if(p.isReady()) readyPlayers--;
-        areAllPlayersReady();
-    }
+    void removePlayer(Player p);
 
     /**
      * increments readyPlayers number and checks if all players are ready
      * */
-    void playerReady()
-    {
-        readyPlayers++;
-        areAllPlayersReady();
-    }
+    void playerReady(Player p);
 
     /**
      * decrements readyPlayers number
      * */
-    void playerNotReady()
-    {
-        readyPlayers--;
-    }
+    void playerNotReady(Player p);
 
-    /**
-     * Checks if all players are ready, if they are starts the game
-     * */
-    public void areAllPlayersReady()
-    {
-        if(actualPlayers==readyPlayers) startGame();
-    }
-
-    /**
-     * Starts the Game
-     * */
-    public abstract void startGame();
 
 }

@@ -1,5 +1,3 @@
-package sample.board;
-
 /**
  * Klasa pola posiada na chwile obecna namiary do pol otaczajacych, okreslony kolor
  * i wzgledne wspolrzedne X, Y, ktore potrzebuje do rysowania

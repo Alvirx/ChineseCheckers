@@ -6,25 +6,21 @@ import java.net.Socket;
 
 import static org.junit.Assert.*;
 
-public class GameTest {
+public class BasicGameTest {
 
-    Game game = new Game("game")
-    {
-        @Override
-        public void startGame() {
-            System.out.println("game_started");
-        }
-    };
+    Game game;
 
     @Test
     public void ShouldReturnGameName() throws Exception
     {
+        game = new BasicGame("Game");
         assertEquals("Game", game.getName());
     }
 
     @Test
     public void ShouldAddPlayer() throws Exception
     {
+        game = new BasicGame("Game");
         Player p1 = new BasicPlayer(new Socket());
         game.addPlayer(p1);
         assertEquals(1, game.getActualPlayers());
@@ -33,6 +29,7 @@ public class GameTest {
     @Test(expected = Exception.class)
     public void ShouldThrowExceptionIfThereIsToMuchPlayers() throws Exception
     {
+        game = new BasicGame("Game");
         Player p1 = new BasicPlayer(new Socket());
         Player p2 = new BasicPlayer(new Socket());
         Player p3 = new BasicPlayer(new Socket());
@@ -47,20 +44,47 @@ public class GameTest {
         game.addPlayer(p5);
         game.addPlayer(p6);
         game.addPlayer(p7);
-
     }
 
-
-
     @Test
-    public void ShouldremovePlayer() throws Exception
+    public void ShouldRemovePlayer() throws Exception
     {
+        game = new BasicGame("Game");
         Player p1 = new BasicPlayer(new Socket());
         Player p2 = new BasicPlayer(new Socket());
         game.addPlayer(p1);
         game.addPlayer(p2);
         game.removePlayer(p1);
         assertEquals(1, game.getActualPlayers());
+    }
+
+
+
+    @Test
+    public void ShouldReturnNumberOfPlayers() throws Exception {
+        game = new BasicGame("Game");
+        game.addPlayer(new BasicPlayer(new Socket()));
+        game.addPlayer(new BasicPlayer(new Socket()));
+        game.addPlayer(new BasicPlayer(new Socket()));
+        assertEquals(3,game.getActualPlayers());
+    }
+
+    @Test
+    public void ShouldMarkPlayerAsReady()
+    {
+        //TODO
+    }
+
+    @Test
+    public void  ShouldMarkPlayerAsNotReady()
+    {
+        //TODO
+    }
+
+    @Test
+    public void ShouldCheckIfAllPlayersAreReady()
+    {
+        //TODO
     }
 
 

@@ -17,11 +17,30 @@ import java.util.LinkedList;
  *  Client -> Server                                Server -> Client
  *  ----------------                                ----------------
  *  GET_GAMES                                       GAMES
- *  JOIN                                                List of games on the server converted to JSON
- *      "Name_Of_Game"                              YOUR_GAME
- *  READY                                               Requested game converted to JSON
- *      true or false converted to JSON             GAME_STARTED
- *  QUIT                                            TO_MUCH_PLAYERS
+ *                                                      {List of games on the server converted to JSON}
+ *
+ *
+ *  JOIN                                            YOUR_GAME (if player was successfully joined)
+ *      {Name Of Game}                                  {Requested game converted to JSON}
+ *                                                  TO_MUCH_PLAYERS (if there is to much players)
+ *
+ *  READY                                           GAME_STARTED(if all players are now ready)
+ *      {true or false converted to JSON}
+ *
+ *
+ *  UPDATE_GAME                                     UP_TO_DATE (if hashes are the same)
+ *      hash of game object                         NOT_UP_TO_DATE (if hashes are different)
+ *                                                          Requested game converted to JSON (without board)
+ *
+ *
+ *
+ *  UPDATE_BOARD                                    BOARD_UP_TO_DATE (if number is same as number on server)
+ *      number of moves that player                 BOARD_NOT_UP_TO_DATE (if those numbers are different)
+ *      already have been noticed                       list of field pairs that ware moves made From one
+ *      and have them                                   to another, chronologically ordered. This list is
+ *                                                      started from first move that player haven`t been
+ *                                                      noticed yet.
+ *  QUIT
  *
  *
  *
@@ -51,7 +70,6 @@ public class BasicPlayer extends Player {
         }
     }
 
-
     /**
      * communicates with client application, sent information, recive it and validate it
      * */
@@ -65,39 +83,15 @@ public class BasicPlayer extends Player {
 
                 if(massage.startsWith("GET_GAMES"))
                 {
-                    LinkedList<Game> list = Lobby.getInstance().getListOfGames();
-                    output.println("GAMES");
-                    output.println(gson.toJson(list.toArray(new Game[list.size()])));
+                    sentGames();
                 }
                 else if(massage.startsWith("JOIN") && game==null)
                 {
-                    String gameName = input.readLine();
-                    game = Lobby.getInstance().getGame(gameName);
-                    try
-                    {
-                        game.addPlayer(this);
-                        output.println("YOUR_GAME");
-                        output.println(gson.toJson(game));
-                    }
-                    catch (Exception e)
-                    {
-                        output.println("TO_MUCH_PLAYERS");
-                        game = null;
-                    }
+                    joinGame(input.readLine());
                 }
                 else if(massage.startsWith("READY") && game!=null)
                 {
-                    String ready = input.readLine();
-                    boolean wasReady = isReady;
-                    isReady = gson.fromJson(ready, Boolean.class);
-                    if(!wasReady && isReady)
-                    {
-                        game.playerReady();
-                    }
-                    else if(wasReady && !isReady)
-                    {
-                        game.playerNotReady();
-                    }
+                    validateReady(input.readLine());
                 }
                 //TODO other stuff
                 massage = input.readLine();
@@ -107,4 +101,42 @@ public class BasicPlayer extends Player {
             System.out.println("Error with communication with client");
         }
     }
+
+    private void sentGames()
+    {
+        LinkedList<Game> list = Lobby.getInstance().getListOfGames();
+        output.println("GAMES");
+        output.println(gson.toJson(list.toArray(new Game[list.size()])));
+    }
+
+    private void joinGame(String gameName)
+    {
+        game = Lobby.getInstance().getGame(gameName);
+        try
+        {
+            game.addPlayer(this);
+            output.println("YOUR_GAME");
+            output.println(gson.toJson(game));
+        }
+        catch (Exception e)
+        {
+            output.println("TO_MUCH_PLAYERS");
+            game = null;
+        }
+    }
+
+    private void validateReady(String ready)
+    {
+        boolean newVal = gson.fromJson(ready, Boolean.class);
+        if(newVal)
+        {
+            game.playerReady(this);
+        }
+        else
+        {
+            game.playerNotReady(this);
+        }
+        isReady = newVal;
+    }
+
 }

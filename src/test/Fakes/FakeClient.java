@@ -1,6 +1,7 @@
 package Fakes;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
         import java.io.PrintWriter;
         import java.net.Socket;
@@ -19,33 +20,21 @@ public class FakeClient
         output = new PrintWriter(socket.getOutputStream(), true);
     }
 
-    public void play() throws Exception
+    public void sent(String text) throws Exception
     {
-        String response;
-        try {
-            while (true) {
-                response = input.readLine();
-                output.println("JOIN");
-                output.println("hihi");
-
-                System.out.println(response);
-            }
-        } catch (Exception e) {
-            System.out.println("Can`t connect to the server");
-        } finally {
-            socket.close();
-        }
+        output.println(text);
+        socket.close();
     }
 
-
-    public static void main(String [] args)
+    public String read()
     {
         try {
-            FakeClient client = new FakeClient("localhost");
-            client.play();
-
-        } catch (Exception e) {
-            System.out.println("Can`t connect to the server");
+            String response = input.readLine();
+            return input.readLine();
+        } catch (IOException e) {
+            return null;
         }
+
     }
+
 }

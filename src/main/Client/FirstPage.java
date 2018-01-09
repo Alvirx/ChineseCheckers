@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import javafx.application.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -40,8 +41,8 @@ public class FirstPage  extends Application{
     @Override
     public void init() throws Exception{
         gamesTable = new TableView<GameView>();
-        manager = new ConnectionManager();
-
+//        manager = new ConnectionManager();
+        manager = new FakeConnectionManager();
     }
     @Override
     public void start(Stage primaryStage){
@@ -82,8 +83,13 @@ public class FirstPage  extends Application{
             chooseGame();
         });
 
+        Button refreshButton = new Button("Odswież");
+        refreshButton.setOnAction(e -> {
+            loadData();
+        });
         HBox bottomPanel = new HBox();
-        bottomPanel.getChildren().addAll(newGameButton, chooseGameButton);
+        bottomPanel.setSpacing(10);
+        bottomPanel.getChildren().addAll(newGameButton, chooseGameButton, refreshButton);
 
 
         //tworzymy layout
@@ -105,6 +111,10 @@ public class FirstPage  extends Application{
         hBox.setSpacing(10);
         hBox.setPadding(new Insets(10, 10,10,10));
 
+        Label infoLabel = new Label();
+        infoLabel.setText("Podaj prosze nazwe nowej gry :)");
+        infoLabel.setFont(new Font("Arial", 17));
+
         TextField nameTextField = new TextField();
         nameTextField.setPromptText("Nazwa Gry");
 //        TextField maxTextField = new TextField();
@@ -114,15 +124,20 @@ public class FirstPage  extends Application{
 
         createButton.setOnAction( e ->{
                 String name = nameTextField.getText();
-                manager.chooseGame(name);
+                joinGame(name);
                 stage.close();
+
         });
 
         hBox.getChildren().addAll(nameTextField, createButton);
         hBox.setSpacing(5);
         hBox.setPadding(new Insets(10, 10, 10, 10));
         hBox.setAlignment(Pos.CENTER);
-        Scene scene = new Scene( hBox, WIDTH * 0.8, HEIGHT/2);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(infoLabel, hBox);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(20);
+        Scene scene = new Scene( vBox, WIDTH * 0.8, HEIGHT/2);
         stage.setScene(scene);
         stage.show();
 
@@ -130,10 +145,9 @@ public class FirstPage  extends Application{
 
     //Nadaje funkcjonalnosc przyciskowi StartGameButton
     void chooseGame(){
-        System.out.println("startGameAction");
-        GameView view = gamesTable.getSelectionModel().getSelectedItem();
-        manager.chooseGame(view.getGameName());
 
+        GameView selectedItem = gamesTable.getSelectionModel().getSelectedItem();
+        joinGame(selectedItem.getGameName());
     }
     private void loadData(){
         data = FXCollections.observableArrayList();
@@ -141,18 +155,41 @@ public class FirstPage  extends Application{
         for(Game game: gT){
             data.add(new GameView(game.getName(), game.getActualPlayers(), game.getMaxPlayers()));
         }
+        gamesTable.setItems(data);
+//        Thread checkingGamesTableThread = new Thread(new CheckingGamesTable(data, manager));
+//        checkingGamesTableThread.start();
     }
 
-    void lobbyWindow(Stage stage){
-        Label nameLabel = new Label();
-        Label actualLabel = new Label();
-        Label readyLabel = new Label();
+    void joinGame(String gameName){
+//        String [] args = new String[1];
+//        args[0] = gameName;
+//        Application.launch(GamePage.class, args);
+        manager.joinGame(gameName);
+        lobbyWindow();
+    }
+    void lobbyWindow(){
 
-        Thread checkingThread = new Thread(new CheckingGame(nameLabel, actualLabel, readyLabel, manager));
-        checkingThread.start();
+        Stage stage = new Stage();
+        Label nameLabel = new Label();
+        nameLabel.setFont(new Font("Arial", 17));
+        Label actualLabel = new Label();
+        actualLabel.setFont(new Font("Arial", 17));
+        Label readyLabel = new Label();
+        readyLabel.setFont(new Font("Arial", 17));
+        CheckingGame checkingGame = new CheckingGame(nameLabel, actualLabel, readyLabel, manager);
+        Thread checkingGameThread = new Thread(checkingGame);
+        checkingGameThread.start();
 
         VBox vBox = new VBox(nameLabel, actualLabel, readyLabel);
+        vBox.setSpacing(20);
+        vBox.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vBox, WIDTH, HEIGHT);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                checkingGame.stop();
+            }
+        });
         stage.setScene(scene);
         stage.show();
 

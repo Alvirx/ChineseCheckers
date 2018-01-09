@@ -51,10 +51,19 @@ public class ConnectionManager implements ConnectionManagerInterface{
 
 
     @Override
-    public void chooseGame(String gameName) {
+    public boolean joinGame(String gameName) {
+        Game game= null;
         client.sendMessage("JOIN");
         System.out.println("wybieram");
         client.sendMessage(gameName);
+
+        String message = client.receiveMessage();
+        if(message.equals("YOUR_GAME")){
+            String json = client.receiveMessage();
+            game = gson.fromJson(json, Game.class);
+        }
+
+        return (game!=null);
 
     }
 

@@ -13,6 +13,7 @@ public class Field {
     private Field downRight;
 
     private Colours colour;
+    private Colours colourOfCounter;
     private int id;
 
     private int X;
@@ -49,6 +50,14 @@ public class Field {
 
     Colours getColour(){
         return colour;
+    }
+
+    public Colours getColourOfCounter() {
+        return colourOfCounter;
+    }
+
+    public void setColourOfCounter(Colours colourOfCounter) {
+        this.colourOfCounter = colourOfCounter;
     }
 
     void setUpLeft(Field upLeft) {

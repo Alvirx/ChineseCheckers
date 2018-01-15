@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.*;
 import javafx.scene.*;
 
+import java.util.ArrayList;
 
 
 public class FirstPage  extends Application{
@@ -36,6 +37,7 @@ public class FirstPage  extends Application{
      * Manager to klasa odpowiezialna za odebranie obiektu, zamiane go na jsona i wyslanie do serwera
      */
     private  ConnectionManagerInterface manager;
+    private ArrayList<GamePage> games;
 
 
     @Override
@@ -168,32 +170,7 @@ public class FirstPage  extends Application{
         lobbyWindow();
     }
     void lobbyWindow(){
-
-        Stage stage = new Stage();
-        Label nameLabel = new Label();
-        nameLabel.setFont(new Font("Arial", 17));
-        Label actualLabel = new Label();
-        actualLabel.setFont(new Font("Arial", 17));
-        Label readyLabel = new Label();
-        readyLabel.setFont(new Font("Arial", 17));
-        CheckingGame checkingGame = new CheckingGame(nameLabel, actualLabel, readyLabel, manager);
-        Thread checkingGameThread = new Thread(checkingGame);
-        checkingGameThread.start();
-
-        VBox vBox = new VBox(nameLabel, actualLabel, readyLabel);
-        vBox.setSpacing(20);
-        vBox.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(vBox, WIDTH, HEIGHT);
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                checkingGame.stop();
-            }
-        });
-        stage.setScene(scene);
-        stage.show();
-
-
+        games.add(new GamePage(manager));
 
 
 

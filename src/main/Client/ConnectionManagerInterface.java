@@ -5,4 +5,5 @@ public interface ConnectionManagerInterface {
     Game getGame();
     Game[] getGames();
     boolean joinGame(String gameName);
+
 }

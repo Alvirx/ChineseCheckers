@@ -162,8 +162,35 @@ public class BasicBoard implements Board{
      * No i konstruktor
      * @param size
      */
-    public BasicBoard(int size) {
+    /**
+     * Number of players powinien byc sprawdzany na wyzszych instancjach
+     * @param size
+     * @param numberOfPlayers
+     */
+
+
+
+    public BasicBoard(int size, int numberOfPlayers) {
         this.size = size;
         getShapes();
+        switch (numberOfPlayers){
+            case 2:
+                for(Field field: fields)
+                    if(field.getColour() == Colours.GREEN || field.getColour() == Colours.ORANGE)
+                        field.setColourOfCounter(field.getColour());
+                break;
+            case 3:
+                for(Field field: fields)
+                    if(field.getColour() == Colours.GREEN || field.getColour() == Colours.YELLOW || field.getColour() == Colours.VIOLET)
+                        field.setColourOfCounter(field.getColour());
+                break;
+            case 6:
+                for(Field field: fields)
+                    field.setColourOfCounter(field.getColour());
+                break;
+            default:
+                System.out.println("Cos poszlo zle");
+
+        }
     }
 }

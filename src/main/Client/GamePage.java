@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class GamePage extends Application {
+public class GamePage {
 
     //Szerokosc i wysokosc aplikaci
     private final int HEIGHT = 600;
@@ -19,30 +19,12 @@ public class GamePage extends Application {
     private ConnectionManagerInterface manager;
     private Game game;
 
-    public static void main(String[] args) {
-        launch("gra3");
-    }
-    @Override
-    public void init() throws Exception {
-        Parameters parameters = getParameters();
-        String gameName = parameters.getRaw().get(0);
 
-        manager = new FakeConnectionManager();
-
-        if(!manager.joinGame(gameName))
-            System.exit(0);
-
-        game = manager.getGame();
-
-
+    GamePage(ConnectionManagerInterface manager){
+        this.manager = manager;
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
 
-        lobbyWindow();
-
-    }
     void lobbyWindow(){
 
         Stage stage = new Stage();
@@ -72,6 +54,10 @@ public class GamePage extends Application {
 
 
 
+
+    }
+    void gameWindow(Stage stage){
+        manager.
 
     }
 

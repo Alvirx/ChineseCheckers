@@ -40,6 +40,17 @@ import java.util.LinkedList;
  *      and have them                                   to another, chronologically ordered. This list is
  *                                                      started from first move that player haven`t been
  *                                                      noticed yet.
+ *
+ *
+ *  GET_POSSIBLE_MOVES                              POSSIBLE_MOVES
+ *      id of field that should be checked              table of integers filled with id`s of fields
+ *                                                      where move is possible converted to json
+ *
+ *  MOVE                                            MOVE_SUCCEEDED(if move was done)
+ *      From-field id ; Targed-field id             MOVE_FAIL (if move was not correct)
+ *
+ *
+ *
  *  QUIT
  *
  *

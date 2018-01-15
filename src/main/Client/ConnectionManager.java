@@ -27,7 +27,7 @@ public class ConnectionManager implements ConnectionManagerInterface{
 
     @Override
     public Game[] getGames() {
-        client.sendMessage("GETGAMES");
+        client.sendMessage("GET_GAMES");
         Game[] games = null;
 
         String message = client.receiveMessage();

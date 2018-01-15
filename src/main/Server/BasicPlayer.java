@@ -40,6 +40,13 @@ import java.util.LinkedList;
  *      and have them                                   to another, chronologically ordered. This list is
  *                                                      started from first move that player haven`t been
  *                                                      noticed yet.
+ *                                                  GAME_FINISHED (if those numbers are different
+ *                                                                  and game was finished)
+ *                                                      list of field pairs that ware moves made From one
+ *                                                      to another, chronologically ordered. This list is
+ *                                                      started from first move that player haven`t been
+ *                                                      noticed yet.
+ *                                                      Number of player that won the game
  *
  *
  *  GET_POSSIBLE_MOVES                              POSSIBLE_MOVES

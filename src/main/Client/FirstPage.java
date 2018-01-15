@@ -43,8 +43,8 @@ public class FirstPage  extends Application{
     @Override
     public void init() throws Exception{
         gamesTable = new TableView<GameView>();
-//        manager = new ConnectionManager();
-        manager = new FakeConnectionManager();
+        manager = new ConnectionManager();
+//        manager = new FakeConnectionManager();
     }
     @Override
     public void start(Stage primaryStage){

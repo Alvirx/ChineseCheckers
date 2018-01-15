@@ -57,7 +57,7 @@ public class GamePage {
 
     }
     void gameWindow(Stage stage){
-        manager.
+        //manager.
 
     }
 

@@ -11,6 +11,7 @@ public class BasicGame implements Game {
     private String name;
     private int actualPlayers;
     private int maxPlayers;
+    private RulesFactory rulesFactory;
 
     private ArrayList<Boolean> players;
 
@@ -24,14 +25,14 @@ public class BasicGame implements Game {
     {
         this.name = name;
         actualPlayers = 0;
-        maxPlayers = 6;
+        rulesFactory = new BasicRulesFactory();
+        maxPlayers = rulesFactory.getMaxPlayers();
         players = new ArrayList<>();
         for (int i=0;i<maxPlayers;i++) players.add(null);
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
@@ -89,6 +90,12 @@ public class BasicGame implements Game {
         }
     }
 
+    @Override
+    public void setRulesFactory(RulesFactory rulesFactory) {
+        this.rulesFactory = rulesFactory;
+        maxPlayers = rulesFactory.getMaxPlayers();
+    }
+
     /**
      * Checks if all players are ready
      * */
@@ -108,6 +115,10 @@ public class BasicGame implements Game {
 
     //TODO everything
     private void startGame() {
-        System.out.println("Game started");
+        rulesFactory.setNumberOfPlayers(actualPlayers);
+        rulesFactory.createBoard();
+        rulesFactory.createJudge();
+        board = rulesFactory.getBoard();
+        judge = rulesFactory.getJudge();
     }
 }

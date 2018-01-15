@@ -5,11 +5,8 @@ package Server;
  * */
 public interface Game
 {
-    /**
-     * @return name of the game
-     * */
-    public String getName();
 
+    String getName();
     /**
      * adds player to the list of players if there is a place for him
      * else throws Exception
@@ -38,6 +35,12 @@ public interface Game
      * decrements readyPlayers number
      * */
     void playerNotReady(Player p);
+
+    /**
+     * sets rulesFactory as given
+     * @param rulesFactory
+     */
+    void setRulesFactory(RulesFactory rulesFactory);
 
 
 }

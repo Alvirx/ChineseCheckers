@@ -2,7 +2,9 @@ package Server;
 
 public class BasicRulesFactory implements RulesFactory {
 
+    private final int maxPlayers=6;
     private int size;
+    private int numberOfPlayers;
     private Server.Board board;
     private Judge judge;
 
@@ -14,6 +16,11 @@ public class BasicRulesFactory implements RulesFactory {
     public void setSize(int size)
     {
         this.size=size;
+    }
+
+    @Override
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     @Override
@@ -43,5 +50,10 @@ public class BasicRulesFactory implements RulesFactory {
     @Override
     public Judge getJudge() {
         return judge;
+    }
+
+    @Override
+    public int getMaxPlayers() {
+        return maxPlayers;
     }
 }

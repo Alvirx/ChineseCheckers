@@ -1,4 +1,4 @@
-package Server;
+package Shared;
 
 /**
  * Klasa pola posiada na chwile obecna namiary do pol otaczajacych, okreslony kolor
@@ -14,8 +14,8 @@ public class Field {
     private Field downLeft;
     private Field downRight;
 
-    private Server.Colours colour;
-    private Server.Colours colourOfCounter;
+    private Colours colour;
+    private Colours colourOfCounter;
     private int id;
 
     private int X;
@@ -25,12 +25,12 @@ public class Field {
         this.id = id;
         this.X  = x;
         this.Y = y;
-        this.colour = Server.Colours.WHITE;
+        this.colour = Colours.WHITE;
 //        System.out.println("utworzono: " + this + " param: " + X + "\t" + Y);
 
     }
 
-    Field(int id, int x, int y, Server.Colours colour){
+    Field(int id, int x, int y, Colours colour){
         this(id, x, y);
         this.colour = colour;
     }
@@ -46,19 +46,19 @@ public class Field {
     public int getY(){
         return Y;
     }
-    void setColour(Server.Colours colour){
+    void setColour(Colours colour){
         this.colour = colour;
     }
 
-    Server.Colours getColour(){
+    Colours getColour(){
         return colour;
     }
 
-    public Server.Colours getColourOfCounter() {
+    public Colours getColourOfCounter() {
         return colourOfCounter;
     }
 
-    public void setColourOfCounter(Server.Colours colourOfCounter) {
+    public void setColourOfCounter(Colours colourOfCounter) {
         this.colourOfCounter = colourOfCounter;
     }
 

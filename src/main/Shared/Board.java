@@ -1,4 +1,4 @@
-package Server;
+package Shared;
 
 public interface Board
 {

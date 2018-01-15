@@ -1,11 +1,13 @@
 package Server;
 
+import Shared.Board;
+
 public class BasicRulesFactory implements RulesFactory {
 
     private final int maxPlayers=6;
     private int size;
     private int numberOfPlayers;
-    private Server.Board board;
+    private Board board;
     private Judge judge;
 
     public BasicRulesFactory()
@@ -26,7 +28,7 @@ public class BasicRulesFactory implements RulesFactory {
     @Override
     public void createBoard()
     {
-        //board = new Server.BasicBoard();
+        //board = new Shared.BasicBoard();
         //TODO tworzenie Hashsetu i przypisywanie go do stworzonej instancji BasicBoard
 
 
@@ -43,7 +45,7 @@ public class BasicRulesFactory implements RulesFactory {
     }
 
     @Override
-    public Server.Board getBoard() {
+    public Board getBoard() {
         return board;
     }
 

@@ -1,5 +1,7 @@
 package Server;
 
+import Shared.Board;
+
 import java.util.ArrayList;
 
 /**
@@ -11,12 +13,14 @@ public class BasicGame implements Game {
     private String name;
     private int actualPlayers;
     private int maxPlayers;
-    private RulesFactory rulesFactory;
-
     private ArrayList<Boolean> players;
 
+    private RulesFactory rulesFactory;
+
+
+
     Judge judge;
-    Server.Board board;
+    Board board;
 
     /**
      * Creates instance of the game and sets actualPlayers and readyPlayers to 0

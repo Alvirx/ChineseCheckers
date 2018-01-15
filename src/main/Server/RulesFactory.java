@@ -1,11 +1,13 @@
 package Server;
 
+import Shared.Board;
+
 public interface RulesFactory
 {
     void setNumberOfPlayers(int numberOfPlayers);
     void createBoard();
     void createJudge();
-    Server.Board getBoard();
+    Board getBoard();
     Judge getJudge();
     int getMaxPlayers();
 }

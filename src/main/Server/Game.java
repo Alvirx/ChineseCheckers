@@ -12,7 +12,7 @@ public interface Game
 
     /**
      * adds player to the list of players if there is a place for him
-     * else throws Exception  TODO make new Exception
+     * else throws Exception
      * @param p player that wants to join
      *
      * */

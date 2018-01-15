@@ -1,2 +1,6 @@
-public interface Board {
+package Server;
+
+public interface Board
+{
+
 }

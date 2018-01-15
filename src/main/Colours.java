@@ -1,3 +1,5 @@
+package Server;
+
 /**
  * Banalna klasa determinujaca kolory do planszy, chyba nic wiecej nie potrzeba
  */

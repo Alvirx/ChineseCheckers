@@ -1,3 +1,5 @@
+package Server;
+
 /**
  * Klasa pola posiada na chwile obecna namiary do pol otaczajacych, okreslony kolor
  * i wzgledne wspolrzedne X, Y, ktore potrzebuje do rysowania
@@ -12,8 +14,8 @@ public class Field {
     private Field downLeft;
     private Field downRight;
 
-    private Colours colour;
-    private Colours colourOfCounter;
+    private Server.Colours colour;
+    private Server.Colours colourOfCounter;
     private int id;
 
     private int X;
@@ -23,12 +25,12 @@ public class Field {
         this.id = id;
         this.X  = x;
         this.Y = y;
-        this.colour = Colours.WHITE;
+        this.colour = Server.Colours.WHITE;
 //        System.out.println("utworzono: " + this + " param: " + X + "\t" + Y);
 
     }
 
-    Field(int id, int x, int y, Colours colour){
+    Field(int id, int x, int y, Server.Colours colour){
         this(id, x, y);
         this.colour = colour;
     }
@@ -44,19 +46,19 @@ public class Field {
     public int getY(){
         return Y;
     }
-    void setColour(Colours colour){
+    void setColour(Server.Colours colour){
         this.colour = colour;
     }
 
-    Colours getColour(){
+    Server.Colours getColour(){
         return colour;
     }
 
-    public Colours getColourOfCounter() {
+    public Server.Colours getColourOfCounter() {
         return colourOfCounter;
     }
 
-    public void setColourOfCounter(Colours colourOfCounter) {
+    public void setColourOfCounter(Server.Colours colourOfCounter) {
         this.colourOfCounter = colourOfCounter;
     }
 

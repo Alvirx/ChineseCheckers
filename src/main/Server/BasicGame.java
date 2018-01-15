@@ -15,7 +15,7 @@ public class BasicGame implements Game {
     private ArrayList<Boolean> players;
 
     Judge judge;
-    //Board board;
+    Server.Board board;
 
     /**
      * Creates instance of the game and sets actualPlayers and readyPlayers to 0

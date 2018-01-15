@@ -1,17 +1,18 @@
+package Server;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 /**
  *
  */
-public class BasicBoard implements Board{
+public class BasicBoard implements Server.Board {
 
     /**
      * Obecnie wszystkie pola sa przechowywane w hashSecie, jeśli bedzie Ci wygodnie mozesz dowolnie zmienic to na jakas
      * inna strukture dancyh, korzystam tylko z dodwania do, oraz z iteracji po elementach.
      */
-    HashSet<Field> fields = new HashSet<>();
+    HashSet<Server.Field> fields = new HashSet<>();
 
     /**
      * Dlugosc skrzydla tworzonej planszy, w zadaniu wystepuje plansza z size = 4, ale chcialo mi sie bawic to zrobilem
@@ -24,7 +25,7 @@ public class BasicBoard implements Board{
      * Jedyne co potrzebuje, aby rysowac gui, potem iteruje sobie po elementach i zamieszczam je na rysunku
      * @return
      */
-    public HashSet<Field> getFields(){
+    public HashSet<Server.Field> getFields(){
         return fields;
     }
 
@@ -41,10 +42,10 @@ public class BasicBoard implements Board{
      */
     private void getShapes() {
 
-        ArrayList<Field> newLine = new ArrayList<>();
-        ArrayList<Field> oldLine = new ArrayList<>();
+        ArrayList<Server.Field> newLine = new ArrayList<>();
+        ArrayList<Server.Field> oldLine = new ArrayList<>();
         Integer id= 0;
-        Field firstField = new Field(id++, 0 , 0, Colours.RED);
+        Server.Field firstField = new Server.Field(id++, 0 , 0, Server.Colours.RED);
         fields.add(firstField);
         newLine.add(firstField);
 
@@ -53,7 +54,7 @@ public class BasicBoard implements Board{
             oldLine = newLine;
             newLine = new ArrayList<>();
             for (int j = 0; j <= i; j++) {
-                Field newField = new Field(id++,2*j - i,2* i, Colours.GREEN);
+                Server.Field newField = new Server.Field(id++,2*j - i,2* i, Server.Colours.GREEN);
                 if (j > 0) {
                     newField.setLeft(newLine.get(j - 1));
                     newField.setUpLeft(oldLine.get(j - 1));
@@ -70,11 +71,11 @@ public class BasicBoard implements Board{
         newLine = new ArrayList<>();
         for(int i = 0; i < 3* size + 1; i++){
 
-             Field newField = new Field(id++, 2 * i -(size + 2 * size),  2 * size ); // 4 zejscia w dol oraz trzy odbicia w lewo podczas ktorych przesuwam sie podwojnie
+             Server.Field newField = new Server.Field(id++, 2 * i -(size + 2 * size),  2 * size ); // 4 zejscia w dol oraz trzy odbicia w lewo podczas ktorych przesuwam sie podwojnie
              if(i < size)
-                 newField.setColour(Colours.NAVY);
+                 newField.setColour(Server.Colours.NAVY);
              if(i > 2 * size + 1)
-                 newField.setColour(Colours.RED);
+                 newField.setColour(Server.Colours.RED);
 
              if(i > 0)
                  newField.setLeft(newLine.get(i - 1));
@@ -93,7 +94,7 @@ public class BasicBoard implements Board{
             oldLine = newLine;
             newLine = new ArrayList<>();
             for (int j = 0; j < 3 * size - i; j ++){
-                Field newField = new Field(id++, 2 * j + i -(size + 1  + 2 * (size - 1)), 2 * (size  + 1 + i));
+                Server.Field newField = new Server.Field(id++, 2 * j + i -(size + 1  + 2 * (size - 1)), 2 * (size  + 1 + i));
 
                 newField.setUpLeft(oldLine.get(j));
                 newField.setUpRight(oldLine.get(j + 1));
@@ -110,7 +111,7 @@ public class BasicBoard implements Board{
             oldLine = newLine;
             newLine = new ArrayList<>();
             for(int j = 0; j <= 2 * size + i; j++){
-                Field newField = new Field(id++, 2 * j - i - (2 * size), 2 * (2 *  size + i));
+                Server.Field newField = new Server.Field(id++, 2 * j - i - (2 * size), 2 * (2 *  size + i));
 
                 if(j < 2 *  size + i)
                 newField.setUpRight(oldLine.get(j));
@@ -127,7 +128,7 @@ public class BasicBoard implements Board{
         oldLine = newLine;
         newLine = new ArrayList<>();
         for(int i = 0; i <  size; i++){
-            Field newField = new Field(id++, 2 * i - (size - 1) ,2 * (3 * size) );
+            Server.Field newField = new Server.Field(id++, 2 * i - (size - 1) ,2 * (3 * size) );
 
             newField.setUpLeft(oldLine.get(size + i));
             newField.setUpRight(oldLine.get(size + 1 + i));
@@ -142,7 +143,7 @@ public class BasicBoard implements Board{
             oldLine = newLine;
             newLine = new ArrayList<>();
             for(int j = 0; j < size - i; j++){
-                Field newField = new Field(id++, 2 * j - (size - 1 - i), 2 * (3 * size + i));
+                Server.Field newField = new Server.Field(id++, 2 * j - (size - 1 - i), 2 * (3 * size + i));
 
                 newField.setUpLeft(oldLine.get(j));
                 newField.setUpRight(oldLine.get(j + 1));
@@ -175,17 +176,17 @@ public class BasicBoard implements Board{
         getShapes();
         switch (numberOfPlayers){
             case 2:
-                for(Field field: fields)
-                    if(field.getColour() == Colours.GREEN || field.getColour() == Colours.ORANGE)
+                for(Server.Field field: fields)
+                    if(field.getColour() == Server.Colours.GREEN || field.getColour() == Server.Colours.ORANGE)
                         field.setColourOfCounter(field.getColour());
                 break;
             case 3:
-                for(Field field: fields)
-                    if(field.getColour() == Colours.GREEN || field.getColour() == Colours.YELLOW || field.getColour() == Colours.VIOLET)
+                for(Server.Field field: fields)
+                    if(field.getColour() == Server.Colours.GREEN || field.getColour() == Server.Colours.YELLOW || field.getColour() == Server.Colours.VIOLET)
                         field.setColourOfCounter(field.getColour());
                 break;
             case 6:
-                for(Field field: fields)
+                for(Server.Field field: fields)
                     field.setColourOfCounter(field.getColour());
                 break;
             default:
